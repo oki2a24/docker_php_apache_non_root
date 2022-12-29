@@ -2,7 +2,13 @@ services:
   app:
     build:
       context: ./
+    environment:
+      - APACHE_SSL_CERTIFICATE_KEY_FILE=${APACHE_SSL_CERTIFICATE_KEY_FILE}
+      - APACHE_SSL_CERTIFICATE_FILE=${APACHE_SSL_CERTIFICATE_FILE}
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./html:/var/www/html
+      - ./ssl/private_key.pem:${APACHE_SSL_CERTIFICATE_KEY_FILE}
+      - ./ssl/certificate.pem:${APACHE_SSL_CERTIFICATE_FILE}
